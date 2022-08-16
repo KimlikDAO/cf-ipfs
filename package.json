@@ -1,0 +1,13 @@
+{
+  "name": "cf-ipfs",
+  "description": "cf-ipfs node",
+  "author": "KimlikDAO <dao@kimlikdao.org>",
+  "license": "GPL",
+  "private": true,
+  "version": "0.0.0",
+  "main": "build/cf-ipfs.js",
+  "devDependencies": {
+    "google-closure-compiler": "^20220601.0.0",
+    "uglify-js": "^3.16.2"
+  }
+}

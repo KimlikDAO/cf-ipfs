@@ -1,0 +1,13 @@
+type = "javascript"
+account_id = "8f0c2f2271ff857947d9a5b2c38595a0"
+zone_id = "cb31764917040dd0b9a7b79e1ec099df"
+compatibility_date = "2022-08-15"
+
+name = "cf-ipfs"
+workers_dev = false
+route = "https://ipfs.kimlikdao.org/*"
+kv_namespaces = [{ binding = "KV", id = "52b51a1db0ce4508a144633d407dab93" }]
+
+[build]
+command = "make cf-deployment"
+upload = { format = "service-worker" }
