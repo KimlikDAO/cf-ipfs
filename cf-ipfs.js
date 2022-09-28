@@ -1,10 +1,10 @@
 import ipfs from '/lib/ipfs';
 
-addEventListener('fetch', (event) => {
+const fetch = (request, env, ctx) => {
   /** @const {URL} */
-  const url = new URL(event.request.url);
+  const url = new URL(request.url);
   if (url.pathname == '/api/v0/add') {
-    event.respondWith(event.request.formData()
+    return (request.formData()
       .then((form) => form.get("blob").arrayBuffer())
       .then((file) => {
         return file.byteLength != 1864
@@ -13,7 +13,7 @@ addEventListener('fetch', (event) => {
             .then((hash) => {
               /** @const {string} */
               const cid = ipfs.CID(new Uint8Array(hash));
-              event.waitUntil(KV.put(cid, file));
+              ctx.waitUntil(env.KV.put(cid, file));
               return new Response(`{"Hash":"${cid}"}`, {
                 headers: {
                   'content-type': 'application/json',
@@ -27,10 +27,10 @@ addEventListener('fetch', (event) => {
   } else if (url.pathname.startsWith('/ipfs/')) {
     /** @const {Promise<Response>} */
     const fromCache = caches.default
-      .match(event.request.url)
+      .match(request.url)
       .then((response) => response ? response : Promise.reject());
     /** @const {Promise<Response>} */
-    const fromKV = KV.get(url.pathname.slice(6), 'arrayBuffer')
+    const fromKV = env.KV.get(url.pathname.slice(6), 'arrayBuffer')
       .then((body) => {
         if (!body) return Promise.reject();
         /** @const {Response} */
@@ -42,14 +42,16 @@ addEventListener('fetch', (event) => {
             'expires': 'Sun, 01 Jan 2034 00:00:00 GMT',
           }
         });
-        event.waitUntil(caches.default.put(event.request.url, response.clone()))
+        ctx.waitUntil(caches.default.put(request.url, response.clone()))
         return response;
       });
-    event.respondWith(Promise.any([fromCache, fromKV]));
+    return Promise.any([fromCache, fromKV]);
   } else {
-    event.respondWith(new Response('NAPİM?', {
+    return (new Response('NAPİM?', {
       status: 404,
       headers: { 'content-type': 'text/plain;charset=utf-8' }
     }));
   }
-});
+}
+
+export default { fetch };
