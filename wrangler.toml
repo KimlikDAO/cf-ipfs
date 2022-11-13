@@ -10,4 +10,3 @@ route = "https://ipfs.kimlikdao.org/*"
 binding = "KV"
 id = "52b51a1db0ce4508a144633d407dab93"
 preview_id = "836c46196848459ba8b3348e383bddf2"
-
