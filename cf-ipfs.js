@@ -6,7 +6,7 @@ addEventListener('fetch', (event) => {
   if (url.pathname == '/api/v0/add') {
     event.respondWith(event.request.formData()
       .then((form) => form.get("blob").arrayBuffer())
-      .then((file) => ipfs.hash(file)
+      .then((file) => ipfs.hash(new Uint8Array(file))
         .then((hash) => {
           /** @const {string} */
           const cid = ipfs.CID(new Uint8Array(hash));
