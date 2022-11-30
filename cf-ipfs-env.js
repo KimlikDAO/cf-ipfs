@@ -5,5 +5,5 @@
  * @externs
  */
 
-/** @type {!KeyValue} */
+/** @type {!cloudflare.KeyValue} */
 let KV;

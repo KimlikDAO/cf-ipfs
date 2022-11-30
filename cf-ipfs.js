@@ -34,6 +34,7 @@ addEventListener('fetch', (event) => {
           headers: {
             'cache-control': 'max-age=29030400,public,immutable',
             'content-type': 'application/json;charset=utf-8',
+            'access-control-allow-origin': "*",
             'content-length': body.byteLength,
             'expires': 'Sun, 01 Jan 2034 00:00:00 GMT',
           }

@@ -5,6 +5,7 @@ main = "build/cf-ipfs.js"
 name = "cf-ipfs"
 workers_dev = false
 route = "https://ipfs.kimlikdao.org/*"
+send_metrics = false
 
 [[kv_namespaces]]
 binding = "KV"
